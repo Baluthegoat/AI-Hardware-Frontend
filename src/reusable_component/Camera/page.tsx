@@ -12,9 +12,10 @@ export default function Camera() {
   const [cameraData, setCameraData] = useState<CameraData | null>(null);
 
   useEffect(() => {
-    axios.get("/api/camera")
-      .then(response => setCameraData(response.data))
-      .catch(error => console.error("Error fetching camera data:", error));
+    axios
+      .get("/api/camera")
+      .then((response) => setCameraData(response.data))
+      .catch((error) => console.error("Error fetching camera data:", error));
   }, []);
 
   if (!cameraData) return <div>Loading camera data...</div>;
