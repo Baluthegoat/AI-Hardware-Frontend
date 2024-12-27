@@ -1,25 +1,24 @@
 // src/reusable_component/Battery/page.tsx
-
 "use client";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Battery = () => {
-  const [batteryData, setBatteryData] = useState({
+    const [batteryData, setBatteryData] = useState({
     percentage: 0,
     health: "",
-  });
+    });
 
-  useEffect(() => {
+    useEffect(() => {
     // Fetch battery data from the backend
     const fetchBatteryData = async () => {
-      try {
+    try {
         const response = await axios.get("http://localhost:5000/api/battery");
         setBatteryData(response.data);
-      } catch (error) {
+    } catch (error) {
         console.error("Error fetching battery data:", error);
-      }
+    }
     };
 
     fetchBatteryData();
