@@ -36,12 +36,12 @@ export default function Dashboard() {
           
           {/* Camera */}
           <div className="bg-zinc-800 flex-1 rounded-lg">
-            {/* Camera content */}
+            {/* Camera */}
           </div>
 
           {/* Time */}
           <div className="bg-zinc-800 h-40 rounded-lg">
-            {/* Time content */}
+            {/* Time */}
           </div>
         </div>
       </div>
