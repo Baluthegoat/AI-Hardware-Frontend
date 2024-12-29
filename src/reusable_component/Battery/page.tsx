@@ -1,37 +1,17 @@
-// src/reusable_component/Battery/page.tsx
-"use client";
+import React from "react";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+interface BatteryProps {
+  battery: { percentage: number; health: string };
+}
 
-const Battery = () => {
-  const [batteryData, setBatteryData] = useState({
-    percentage: 0,
-    health: "",
-  });
-
-  useEffect(() => {
-    // Fetch battery data from the backend
-    const fetchBatteryData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/api/battery");
-        setBatteryData(response.data);
-      } catch (error) {
-        console.error("Error fetching battery data:", error);
-      }
-    };
-
-    fetchBatteryData();
-  }, []); // Run this effect only once when the component mounts
-
+const Battery: React.FC<BatteryProps> = ({ battery }) => {
   return (
-    <div>
-      <h2>Battery Data</h2>
-      <p>Percentage: {batteryData.percentage}%</p>
-      <p>Health: {batteryData.health}</p>
+    <div className="flex flex-col items-center justify-center text-white">
+      <h3>Battery</h3>
+      <p>{battery.percentage}%</p>
+      <p>Status: {battery.health}</p>
     </div>
   );
 };
-
 
 export default Battery;
