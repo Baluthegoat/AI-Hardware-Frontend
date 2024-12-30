@@ -1,11 +1,12 @@
-"use client"; // Mark as client component
+"use client";
 
 import React, { useEffect, useState } from "react";
+import { FiBattery, FiCamera, FiMapPin, FiThermometer, FiZap } from "react-icons/fi"; // Icons from react-icons
 import Camera from "../reusable_component/Camera/page";
 import GPS from "../reusable_component/GPS/page";
 import Speedometer from "../reusable_component/Speedometer/page";
 import Battery from "../reusable_component/Battery/page";
-import axios from "axios"; // Make sure to install axios
+import axios from "axios";
 
 export default function Dashboard() {
   const [time, setTime] = useState<string>("");
@@ -14,29 +15,27 @@ export default function Dashboard() {
     temperature: "",
     gps: { latitude: 0, longitude: 0 },
     battery: { percentage: 0, health: "" },
-    camera: { status: "", feed: "" }
+    camera: { status: "", feed: "" },
   });
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch data from the backend
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching data from backend...");
         const response = await axios.get("http://localhost:3001/api/data");
-        console.log("Data received from backend:", response.data);
-
         setData({
           speed: response.data.speed || "Unknown",
           temperature: response.data.temperature || "Unknown",
           gps: response.data.gps || { latitude: 0, longitude: 0 },
-          battery: response.data.battery || { percentage: 75, health: "Good" },
-          camera: response.data.camera || { status: "Streaming", feed: "http://127.0.0.1:5000" }
+          battery: response.data.battery || { percentage: 0, health: "Good" },
+          camera: response.data.camera || {
+            status: "Streaming",
+            feed: "http://127.0.0.1:5001",
+          },
         });
       } catch (error) {
-        console.error("Error fetching data:", error);
         setError("Failed to fetch data from the server.");
       } finally {
         setLoading(false);
@@ -45,62 +44,66 @@ export default function Dashboard() {
 
     fetchData();
 
-    // Update the time every second
     const interval = setInterval(() => {
-      const currentTime = new Date().toLocaleTimeString();
-      setTime(currentTime);
-    }, 1000); // Update every second
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
 
-    return () => clearInterval(interval); // Clear interval on component unmount
+    return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <div>Loading data...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="flex justify-center items-center h-screen text-gray-800">Loading data...</div>;
+  if (error) return <div className="flex justify-center items-center h-screen text-red-500">{error}</div>;
 
   return (
-    <div className="bg-zinc-700 h-screen w-screen flex flex-col p-8">
-      <div className="bg-black h-full w-full rounded-2xl grid grid-cols-4 gap-4 p-4">
+    <div className="bg-gray-50 h-screen w-screen flex flex-col p-8 text-gray-900">
+      <div className="bg-white h-full w-full rounded-2xl grid grid-cols-4 gap-6 p-6 shadow-xl border border-gray-200">
 
-        {/* Left Column: Three Small Cards */}
-        <div className="flex flex-col gap-4">
-
-          {/* Speedometer */}
-          <div className="bg-zinc-800 h-1/3 rounded-lg">
-            <Speedometer speed={data.speed} />
+        {/* Left Column: Small Cards */}
+        <div className="flex flex-col gap-6">
+          <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
+            <FiZap className="text-4xl text-blue-600" />
+            <div>
+              <Speedometer speed={data.speed} />
+              <p className="text-sm text-gray-700"></p>
+            </div>
           </div>
-
-          {/* GPS */}
-          <div className="bg-zinc-800 h-1/3 rounded-lg">
-            <GPS gps={data.gps} />
+          <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
+            <FiMapPin className="text-4xl text-green-600" />
+            <div>
+              <GPS gps={data.gps} />
+              <p className="text-sm text-gray-700"></p>
+            </div>
           </div>
-
-          {/* Battery */}
-          <div className="bg-zinc-800 h-1/3 rounded-lg">
-            <Battery battery={data.battery} />
+          <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
+            <FiBattery className="text-4xl text-yellow-600" />
+            <div>
+              <Battery battery={data.battery} />
+              <p className="text-sm text-gray-700"></p>
+            </div>
           </div>
-
         </div>
 
         {/* Right Column: Camera and Temperature */}
-        <div className="col-span-3 flex flex-col gap-4">
-          
-          {/* Camera with Time */}
-          <div className="bg-zinc-800 flex-1 rounded-lg flex flex-col">
-            <div className="flex justify-between items-center p-4 bg-black text-white rounded-t-lg">
-              <p className="text-lg font-semibold">Live Camera Feed</p>
-              <p className="text-sm">{time}</p> {/* Display the current time */}
+        <div className="col-span-3 flex flex-col gap-6">
+          <div className="bg-gradient-to-r from-gray-100 to-gray-200 flex-1 rounded-lg shadow-md flex flex-col overflow-hidden transition-transform hover:scale-105">
+            <div className="flex justify-between items-center px-6 py-4 bg-gray-200 rounded-t-lg border-b border-gray-300">
+              <div className="flex items-center gap-2">
+                <FiCamera className="text-2xl text-purple-600" />
+                <p className="text-lg font-semibold tracking-wide text-purple-600">Live Camera Feed</p>
+              </div>
+              <p className="text-sm text-gray-700">{time}</p>
             </div>
             <div className="flex-1">
               <Camera camera={data.camera} />
             </div>
           </div>
-
-          {/* Temperature */}
-          <div className="bg-zinc-800 h-40 rounded-lg flex items-center justify-center text-2xl text-white">
-            <p>{data.temperature}°C</p> {/* Display temperature */}
+          <div className="bg-gradient-to-r from-gray-100 to-gray-200 h-40 rounded-lg shadow-md flex items-center justify-center text-3xl font-bold tracking-wider text-red-600 transition-transform hover:scale-105">
+            <FiThermometer className="text-5xl text-red-600 mr-4" />
+            {data.temperature}°C
           </div>
         </div>
       </div>
     </div>
   );
 }
+
