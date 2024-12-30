@@ -5,16 +5,13 @@ import Camera from "../reusable_component/Camera/page";
 import GPS from "../reusable_component/GPS/page";
 import Speedometer from "../reusable_component/Speedometer/page";
 import Battery from "../reusable_component/Battery/page";
-import Temperature from "../reusable_component/Temperature/page";
 import axios from "axios"; // Make sure to install axios
 
 export default function Dashboard() {
   const [time, setTime] = useState<string>("");
-
-  // State for centralized data
   const [data, setData] = useState({
-    temperature: { internal: "", external: "" },
     speed: "",
+    temperature: "",
     gps: { latitude: 0, longitude: 0 },
     battery: { percentage: 0, health: "" },
     camera: { status: "", feed: "" }
@@ -32,14 +29,11 @@ export default function Dashboard() {
         console.log("Data received from backend:", response.data);
 
         setData({
-          temperature: {
-            internal: response.data.temperature.internal || "Unknown", // Assuming backend provides internal temperature
-            external: response.data.temperature.external || "Unknown"
-          },
           speed: response.data.speed || "Unknown",
+          temperature: response.data.temperature || "Unknown",
           gps: response.data.gps || { latitude: 0, longitude: 0 },
-          battery: response.data.battery || { percentage: 75, health: "Good" }, // Replace with actual data if provided
-          camera: response.data.camera || { status: "Streaming", feed: "http://127.0.0.1:5000" } // Example camera feed
+          battery: response.data.battery || { percentage: 75, health: "Good" },
+          camera: response.data.camera || { status: "Streaming", feed: "http://127.0.0.1:5000" }
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -66,7 +60,7 @@ export default function Dashboard() {
   return (
     <div className="bg-zinc-700 h-screen w-screen flex flex-col p-8">
       <div className="bg-black h-full w-full rounded-2xl grid grid-cols-4 gap-4 p-4">
-        
+
         {/* Left Column: Three Small Cards */}
         <div className="flex flex-col gap-4">
 
@@ -87,17 +81,23 @@ export default function Dashboard() {
 
         </div>
 
-        {/* Right Column: Camera and Time */}
+        {/* Right Column: Camera and Temperature */}
         <div className="col-span-3 flex flex-col gap-4">
           
-          {/* Camera */}
-          <div className="bg-zinc-800 flex-1 rounded-lg">
-            <Camera camera={data.camera} />
+          {/* Camera with Time */}
+          <div className="bg-zinc-800 flex-1 rounded-lg flex flex-col">
+            <div className="flex justify-between items-center p-4 bg-black text-white rounded-t-lg">
+              <p className="text-lg font-semibold">Live Camera Feed</p>
+              <p className="text-sm">{time}</p> {/* Display the current time */}
+            </div>
+            <div className="flex-1">
+              <Camera camera={data.camera} />
+            </div>
           </div>
 
-          {/* Time */}
+          {/* Temperature */}
           <div className="bg-zinc-800 h-40 rounded-lg flex items-center justify-center text-2xl text-white">
-            <p>{time}</p> {/* Display current time */}
+            <p>{data.temperature}°C</p> {/* Display temperature */}
           </div>
         </div>
       </div>
