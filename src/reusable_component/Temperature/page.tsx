@@ -28,7 +28,7 @@ const Temperature = () => {
     // Initial fetch
     fetchTemperatureData();
 
-    // Seting interval to fetch temperature data every 5 seconds
+    // Set interval to fetch temperature data every 5 seconds
     const interval = setInterval(() => {
       fetchTemperatureData();
     }, 5000); // every 5 seconds
@@ -51,10 +51,11 @@ const Temperature = () => {
           <GaugeChart 
             id="temperature-gauge"
             nrOfLevels={30}
-            percent={normalizedTemperature} // Useing normalized value for the gauge
+            percent={normalizedTemperature} // Using normalized value for the gauge
             colors={["#0DD3F2", "#f22c0d"]}
             arcWidth={0.3}
-            animate={false}  // disabling continuous animation of the gauge
+            animate={false}  // Disabling continuous animation of the gauge
+            textColor="transparent" // Hides the percentage text inside the gauge
           />
           <p className={temperatureData.temperature < 0 ? "text-red-500" : "text-black"}>
             {temperatureData.temperature}°C

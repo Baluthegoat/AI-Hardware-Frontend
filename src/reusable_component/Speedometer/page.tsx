@@ -57,6 +57,7 @@ const Speedometer = () => {
             colors={["#0DD3F2", "#f22c0d"]}
             arcWidth={0.3}
             animate={false}  // Disabling continuous animation of the gauge
+            textColor="transparent" // Hides the percentage text inside the gauge
           />
           <p className="text-lg mt-4">{speedData.speed} km/h</p>
         </div>
