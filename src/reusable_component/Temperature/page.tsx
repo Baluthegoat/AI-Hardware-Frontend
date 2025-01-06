@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import GaugeChart from "react-gauge-chart";
 import axios from "axios";
 
 const Temperature = () => {
   const [temperatureData, setTemperatureData] = useState({
-    internal: "",
-    external: "",
+    temperature: 0,
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Fetch data from your backend server, which will then fetch from the dummy server
+    // Fetch the temperature data
     const fetchTemperatureData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/api/data");
-        // Assume the response contains { temperature: { internal, external }, gps, speed }
         setTemperatureData({
-          internal: response.data.temperature, // Assuming temperature data is inside response.data
-          external: response.data.temperature, // Or change it if your API provides separate internal and external data
+          temperature: response.data.temperature || 0, // Assuming the temperature data you receive is a single value
         });
       } catch (error) {
         console.error("Error fetching temperature data:", error);
@@ -27,17 +25,42 @@ const Temperature = () => {
       }
     };
 
+    // Initial fetch
     fetchTemperatureData();
+
+    // Set interval to fetch temperature data every 5 seconds
+    const interval = setInterval(() => {
+      fetchTemperatureData();
+    }, 5000); // Adjust this interval to your needs (e.g., every 5 seconds)
+
+    // Cleanup function to clear the interval when component is unmounted
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) return <div>Loading temperature data...</div>;
   if (error) return <div>{error}</div>;
 
+  // Normalize temperature to range 0-1 for the gauge chart (assuming -50 to 50 scale)
+  const normalizedTemperature = (temperatureData.temperature + 50) / 100;
+
   return (
-    <div>
-      <h2>Temperature</h2>
-      <p>Internal: {temperatureData.internal}°C</p>
-      <p>External: {temperatureData.external}°C</p>
+    <div className="flex flex-col items-center">
+      <div className="flex justify-center w-full">
+        <div className="text-center">
+          <h3 className="text-xl font-semibold mb-4">Temperature</h3>
+          <GaugeChart 
+            id="temperature-gauge"
+            nrOfLevels={30}
+            percent={normalizedTemperature} // Use normalized value for the gauge
+            colors={["#0DD3F2", "#f22c0d"]}
+            arcWidth={0.3}
+            animate={false}  // This will disable continuous animation of the gauge
+          />
+          <p className={temperatureData.temperature < 0 ? "text-red-500" : "text-black"}>
+            {temperatureData.temperature}°C
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,23 +1,22 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { FiBattery, FiCamera, FiMapPin, FiThermometer, FiZap } from "react-icons/fi"; // Icons from react-icons
+import { FiBattery, FiCamera, FiMapPin, FiZap } from "react-icons/fi";
 import Camera from "../reusable_component/Camera/page";
 import GPS from "../reusable_component/GPS/page";
 import Speedometer from "../reusable_component/Speedometer/page";
 import Battery from "../reusable_component/Battery/page";
+import Temperature from "../reusable_component/Temperature/page";
 import axios from "axios";
 
 export default function Dashboard() {
   const [time, setTime] = useState<string>("");
   const [data, setData] = useState({
     speed: "",
-    temperature: "",
     gps: { latitude: 0, longitude: 0 },
     battery: { percentage: 0, health: "" },
     camera: { status: "", feed: "" },
   });
-
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +26,6 @@ export default function Dashboard() {
         const response = await axios.get("http://localhost:3001/api/data");
         setData({
           speed: response.data.speed || "Unknown",
-          temperature: response.data.temperature || "Unknown",
           gps: response.data.gps || { latitude: 0, longitude: 0 },
           battery: response.data.battery || { percentage: 0, health: "Good" },
           camera: response.data.camera || {
@@ -57,33 +55,26 @@ export default function Dashboard() {
   return (
     <div className="bg-gray-50 h-screen w-screen flex flex-col p-8 text-gray-900">
       <div className="bg-white h-full w-full rounded-2xl grid grid-cols-4 gap-6 p-6 shadow-xl border border-gray-200">
-
-        {/* Left Column: Small Cards */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
             <FiZap className="text-4xl text-blue-600" />
             <div>
               <Speedometer speed={data.speed} />
-              <p className="text-sm text-gray-700"></p>
             </div>
           </div>
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
             <FiMapPin className="text-4xl text-green-600" />
             <div>
               <GPS gps={data.gps} />
-              <p className="text-sm text-gray-700"></p>
             </div>
           </div>
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
             <FiBattery className="text-4xl text-yellow-600" />
             <div>
               <Battery battery={data.battery} />
-              <p className="text-sm text-gray-700"></p>
             </div>
           </div>
         </div>
-
-        {/* Right Column: Camera and Temperature */}
         <div className="col-span-3 flex flex-col gap-6">
           <div className="bg-gradient-to-r from-gray-100 to-gray-200 flex-1 rounded-lg shadow-md flex flex-col overflow-hidden transition-transform hover:scale-105">
             <div className="flex justify-between items-center px-6 py-4 bg-gray-200 rounded-t-lg border-b border-gray-300">
@@ -97,13 +88,9 @@ export default function Dashboard() {
               <Camera camera={data.camera} />
             </div>
           </div>
-          <div className="bg-gradient-to-r from-gray-100 to-gray-200 h-40 rounded-lg shadow-md flex items-center justify-center text-3xl font-bold tracking-wider text-red-600 transition-transform hover:scale-105">
-            <FiThermometer className="text-5xl text-red-600 mr-4" />
-            {data.temperature}°C
-          </div>
+          <Temperature /> 
         </div>
       </div>
     </div>
   );
 }
-
