@@ -57,9 +57,8 @@ export default function Dashboard() {
       <div className="bg-white h-full w-full rounded-2xl grid grid-cols-4 gap-6 p-6 shadow-xl border border-gray-200">
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
-            <FiZap className="text-4xl text-blue-600" />
             <div>
-              <Speedometer />  {/* Updated to include Gauge Chart with periodic fetching */}
+              <Speedometer />  
             </div>
           </div>
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">

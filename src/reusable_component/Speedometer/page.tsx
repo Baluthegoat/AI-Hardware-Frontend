@@ -30,7 +30,7 @@ const Speedometer = () => {
     // Initial fetch
     fetchSpeedData();
 
-    // Seting interval to fetch speed data every 1 second
+    // Set interval to fetch speed data every 1 second
     const interval = setInterval(() => {
       fetchSpeedData();
     }, 1000); // 1000 ms (1 second)
@@ -42,7 +42,7 @@ const Speedometer = () => {
   if (loading) return <div>Loading speed data...</div>;
   if (error) return <div>{error}</div>;
 
-  // Normalize speed to range 0-1 for the gauge chart ( 0 to 200 km/h scale)
+  // Normalize speed to range 0-1 for the gauge chart (0 to 200 km/h scale)
   const normalizedSpeed = speedData.speed / 200;
 
   return (
@@ -53,7 +53,7 @@ const Speedometer = () => {
           <GaugeChart 
             id="speed-gauge"
             nrOfLevels={30}
-            percent={normalizedSpeed} // Useing normalized value for the gauge
+            percent={normalizedSpeed} // Using normalized value for the gauge
             colors={["#0DD3F2", "#f22c0d"]}
             arcWidth={0.3}
             animate={false}  // Disabling continuous animation of the gauge
