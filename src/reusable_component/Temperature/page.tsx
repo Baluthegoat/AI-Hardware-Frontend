@@ -15,7 +15,7 @@ const Temperature = () => {
       try {
         const response = await axios.get("http://localhost:3001/api/data");
         setTemperatureData({
-          temperature: response.data.temperature || 0, // Assuming the temperature data you receive is a single value
+          temperature: response.data.temperature, // access the temperature data
         });
       } catch (error) {
         console.error("Error fetching temperature data:", error);
@@ -28,19 +28,19 @@ const Temperature = () => {
     // Initial fetch
     fetchTemperatureData();
 
-    // Set interval to fetch temperature data every 5 seconds
+    // Seting interval to fetch temperature data every 5 seconds
     const interval = setInterval(() => {
       fetchTemperatureData();
-    }, 5000); // Adjust this interval to your needs (e.g., every 5 seconds)
+    }, 5000); // every 5 seconds
 
-    // Cleanup function to clear the interval when component is unmounted
+    // Cleanup function that clears the interval when component is unmounted
     return () => clearInterval(interval);
   }, []);
 
   if (loading) return <div>Loading temperature data...</div>;
   if (error) return <div>{error}</div>;
 
-  // Normalize temperature to range 0-1 for the gauge chart (assuming -50 to 50 scale)
+  // Normalize temperature to range 0-1 for the gauge chart (-50 to 50 scale)
   const normalizedTemperature = (temperatureData.temperature + 50) / 100;
 
   return (
@@ -51,10 +51,10 @@ const Temperature = () => {
           <GaugeChart 
             id="temperature-gauge"
             nrOfLevels={30}
-            percent={normalizedTemperature} // Use normalized value for the gauge
+            percent={normalizedTemperature} // Useing normalized value for the gauge
             colors={["#0DD3F2", "#f22c0d"]}
             arcWidth={0.3}
-            animate={false}  // This will disable continuous animation of the gauge
+            animate={false}  // disabling continuous animation of the gauge
           />
           <p className={temperatureData.temperature < 0 ? "text-red-500" : "text-black"}>
             {temperatureData.temperature}°C

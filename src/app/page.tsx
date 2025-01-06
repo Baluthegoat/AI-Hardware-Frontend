@@ -59,7 +59,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
             <FiZap className="text-4xl text-blue-600" />
             <div>
-              <Speedometer speed={data.speed} />
+              <Speedometer />  {/* Updated to include Gauge Chart with periodic fetching */}
             </div>
           </div>
           <div className="flex items-center gap-4 bg-gradient-to-r from-gray-100 to-gray-200 h-1/3 rounded-lg shadow-md p-4 transition-transform hover:scale-105">
@@ -88,7 +88,7 @@ export default function Dashboard() {
               <Camera camera={data.camera} />
             </div>
           </div>
-          <Temperature /> 
+          <Temperature />
         </div>
       </div>
     </div>
