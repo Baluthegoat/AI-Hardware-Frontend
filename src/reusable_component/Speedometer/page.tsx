@@ -4,7 +4,7 @@ import axios from "axios";
 
 const Speedometer = () => {
   const [speedData, setSpeedData] = useState({
-    speed: 0, // Default speed value
+    speed: 0, 
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
