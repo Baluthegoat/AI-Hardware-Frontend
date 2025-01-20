@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from "react";
 import { FiBattery, FiCamera, FiMapPin } from "react-icons/fi";
 import Camera from "../reusable_component/Camera/page";
-import GPS from "../reusable_component/GPS/page";
+import GPS from "../reusable_component/Gps/page";
 import Speedometer from "../reusable_component/Speedometer/page";
 import Battery from "../reusable_component/Battery/page";
 import Temperature from "../reusable_component/Temperature/page";
 import axios from "axios";
+import Link from "next/link";
 
 export default function Dashboard() {
   const [time, setTime] = useState<string>("");
@@ -76,11 +77,11 @@ export default function Dashboard() {
             <Speedometer />
           </div>
 
-          {/* GPS Component */}
-          <div className="flex items-center gap-4 bg-gradient-to-r from-green-50 to-green-200 rounded-lg shadow-md p-6 transition-transform hover:scale-105 border border-gray-300">
+          {/* GPS Component  */}
+          <Link href="/map" className="flex items-center gap-4 bg-gradient-to-r from-green-50 to-green-200 rounded-lg shadow-md p-6 transition-transform hover:scale-105 border border-gray-300">
             <FiMapPin className="text-4xl text-green-600" />
-            <GPS gps={data.gps} />
-          </div>
+            <div className="text-lg text-gray-700">Click to view the location of the car</div>
+          </Link>
 
           {/* Battery Component */}
           <div className="flex flex-col items-center gap-4 bg-gradient-to-r from-yellow-50 to-yellow-200 rounded-lg shadow-md p-6 transition-transform hover:scale-105 border border-gray-300">
@@ -108,7 +109,7 @@ export default function Dashboard() {
             </div>
             <div className="flex-1 overflow-hidden">
               <div className="relative w-full h-full">
-                {/* Ensure camera feed scales properly without distortion */}
+                {/* Ensuring camera feed scales properly without distortion */}
                 <Camera
                   camera={data.camera}
                   className="absolute w-full h-full object-cover"
