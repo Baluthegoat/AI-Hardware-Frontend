@@ -52,11 +52,11 @@ const MapPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
+    <div className="min-h-screen bg-[#F9FCFF] flex flex-col">
       <div className="flex items-center justify-start p-4">
         <button
           onClick={handleBack}
-          className="flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition-colors"
+          className="flex items-center gap-2 bg-[#2E4156] text-white px-4 py-2 rounded-lg shadow-md hover:bg-[#1A2D42] transition-colors"
         >
           <FiArrowLeft className="text-xl" />
           <span className="text-lg font-medium">Back</span>
@@ -64,10 +64,10 @@ const MapPage = () => {
       </div>
       <div className="flex flex-col items-center justify-center w-full flex-1 p-6">
         <div className="w-full max-w-4xl p-8 bg-white rounded-xl shadow-lg">
-          <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          <h1 className="text-3xl font-bold text-center text-[#1A2D42] mb-6">
             View Car Location on the Map
           </h1>
-          <div className="h-96 bg-gray-300 rounded-lg border border-gray-200">
+          <div className="h-96 bg-[#D4D8DD] rounded-lg border border-[#AAB7B7]">
             {loading && (
               <div className="h-full w-full flex items-center justify-center bg-gray-200">
                 <span className="text-gray-600">Loading map...</span>
