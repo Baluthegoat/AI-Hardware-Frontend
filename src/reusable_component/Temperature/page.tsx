@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import GaugeChart from "react-gauge-chart";
+import Thermometer from "react-thermometer-component";
 import axios from "axios";
 
 const Temperature = () => {
@@ -42,54 +42,56 @@ const Temperature = () => {
   if (loading) return <div>Loading temperature data...</div>;
   if (error) return <div>{error}</div>;
 
-  // Normalize temperature to range 0-1 for the gauge chart (-50 to 50 scale)
-  const normalizedTemperature = (temperatureData.temperature + 50) / 100;
-
-  // Determine the temperature range and color based on thresholds
-  const getTemperatureRange = (temperature: number) => {
-    if (temperature < 10) return { label: "Cold", color: "#00f" };
-    if (temperature >= 10 && temperature < 25) return { label: "Normal", color: "#1ae54f" };
-    return { label: "Hot", color: "#f22c0d" };
+  // Determine the thermometer color and text color based on temperature
+  const getThermometerColor = (temperature: number) => {
+    console.log("Current Temperature:", temperature);  // Log temperature to see its value
+    if (temperature < 5) return "#00f"; // Blue for below 5°C
+    if (temperature >= 5 && temperature <= 15) return "#1ae54f"; // Green for 5°C to 15°C
+    return "#f22c0d"; // Red for above 15°C
   };
 
-  const { label, color } = getTemperatureRange(temperatureData.temperature);
+  // Determine the text color based on the temperature range
+  const getTextColor = (temperature: number) => {
+    if (temperature < 5) return "text-blue-500"; // Blue for below 5°C
+    if (temperature >= 5 && temperature <= 15) return "text-green-500"; // Green for 5°C to 15°C
+    return "text-red-500"; // Red for above 15°C
+  };
+
+  const thermometerColor = getThermometerColor(temperatureData.temperature);
+  const textColor = getTextColor(temperatureData.temperature);
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex justify-center w-full">
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex justify-center w-full flex-col items-center">
         <div className="text-center">
           <h3 className="text-xl font-semibold mb-4">Temperature</h3>
 
-          {/* Gauge Chart */}
-          <GaugeChart
-            id="temperature-gauge"
-            nrOfLevels={30}
-            percent={normalizedTemperature} // Using normalized value for the gauge
-            colors={["#00f", "#1ae54f", "#f22c0d"]} // Color range for cold, normal, hot
-            arcWidth={0.3}
-            animate={false}  // Disabling continuous animation of the gauge
-            textColor="transparent" // Hides the percentage text inside the gauge
+          {/* Thermometer Component with dynamic color */}
+          <Thermometer
+            theme="light"
+            value={temperatureData.temperature}
+            max="30" // Set according to your expected temperature range
+            steps="1"
+            format="°C"
+            size="large"
+            height="200"
+            thermometerColor={thermometerColor} // Apply dynamic color to the thermometer
           />
-          
-          <p className={temperatureData.temperature < 0 ? "text-red-500" : "text-black"}>
-            {temperatureData.temperature}°C
-          </p>
 
-          {/* Temperature Range Label */}
-          <div className="mt-2 text-lg font-semibold" style={{ color }}>
-            {label} {/* Display the temperature range (Cold/Normal/Hot) */}
-          </div>
+          {/* Temperature Data Below Thermometer */}
+          <div className="mt-4 flex flex-col items-center">
+            <p className={`text-lg font-semibold ${textColor}`}>
+              {temperatureData.temperature}°C
+            </p>
 
-          {/* Live Update Message */}
-          {lastUpdated && (
-            <div className="text-sm text-gray-500 mt-2">
-              <span>Last updated: {lastUpdated.toLocaleTimeString()}</span>
+            {/* Temperature Range Label */}
+            <div className="mt-2 text-lg font-semibold" style={{ color: thermometerColor }}>
+              {temperatureData.temperature < 5
+                ? "Cold"
+                : temperatureData.temperature <= 15
+                ? "Normal"
+                : "Hot"}
             </div>
-          )}
-          
-          {/* Displaying a message when data is being updated */}
-          <div className="mt-2 text-sm text-blue-500">
-            <span>Data is updating...</span>
           </div>
         </div>
       </div>

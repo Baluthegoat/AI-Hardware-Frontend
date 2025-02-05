@@ -27,8 +27,8 @@ const Battery: React.FC<BatteryProps> = ({ battery }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-gray-800">
-      <div style={{ width: "100px", height: "100px" }}>
+    <div className="flex flex-col items-center justify-center text-gray-800 h-full">
+      <div className="flex justify-center items-center" style={{ width: "100px", height: "100px" }}>
         <CircularProgressbar
           value={percentage}
           text={`${percentage}%`}

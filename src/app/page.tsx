@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { FiBattery, FiCamera, FiMapPin } from "react-icons/fi";
 import Camera from "../reusable_component/Camera/page";
-import GPS from "../reusable_component/Gps/page";
 import Speedometer from "../reusable_component/Speedometer/page";
 import Battery from "../reusable_component/Battery/page";
 import Temperature from "../reusable_component/Temperature/page";
@@ -73,7 +72,7 @@ export default function Dashboard() {
         {/* Left Column: Temperature & Speedometer */}
         <div className="flex flex-col gap-6">
           {/* Temperature */}
-          <div className="h-1/2 bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex flex-col justify-center items-center gap-4 border border-[#AAB7B7]">
+          <div className="h-1/2 bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex flex-col justify-center items-center gap-4 border border-[#AAB7B7] transition-transform hover:scale-105">
             <Temperature />
             <Link
               href="/TPdata"
@@ -84,7 +83,7 @@ export default function Dashboard() {
           </div>
 
           {/* Speedometer */}
-          <div className="h-1/2 bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex items-center gap-4 border border-[#AAB7B7]">
+          <div className="h-1/2 bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex items-center gap-4 border border-[#AAB7B7] transition-transform hover:scale-105">
             <Speedometer />
           </div>
         </div>
@@ -105,26 +104,33 @@ export default function Dashboard() {
             <div className="flex-1 overflow-hidden">
               <Camera
                 camera={data.camera}
-                className="w-full h-full object-cover"
-              />
+                className="w-full h-full object-cover"/>
             </div>
           </div>
 
           {/* Battery & GPS */}
           <div className="h-1/3 grid grid-cols-2 gap-6">
             {/* Battery */}
-            <div className="bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex items-center gap-4 border border-[#AAB7B7]">
+            <div className="bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex items-center gap-4 border border-[#AAB7B7] transition-transform hover:scale-105">
               <Battery battery={data.battery} />
             </div>
             {/* GPS */}
             <Link
               href="/map"
-              className="bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-md p-6 flex items-center gap-4 border border-[#AAB7B7]"
+              className="bg-gradient-to-r from-[#D4D8DD] to-[#C0C8CA] rounded-lg shadow-xl p-6 flex flex-col gap-4 items-center border border-[#AAB7B7] hover:scale-105 transition-transform"
             >
-              <FiMapPin className="text-4xl text-[#2E4156]" />
-              <div className="text-lg text-[#1A2D42]">
-                Click to view the location of the car
+              {/* Map Pin Icon with Subtle Animation */}
+              <FiMapPin className="text-5xl text-[#2E4156] transition-transform transform hover:scale-110" />
+
+              <div className="text-center text-lg text-[#2E4156] font-semibold">
+                <p>Track Car Location</p>
+                <p className="text-sm text-[#1A2D42]">Tap to see real-time location on the map</p>
               </div>
+
+              {/* Button to view details */}
+              <button className="mt-4 bg-[#2E4156] text-white p-2 rounded-lg shadow-md hover:bg-[#1A2D42] transition-colors">
+                View Details
+              </button>
             </Link>
           </div>
         </div>
