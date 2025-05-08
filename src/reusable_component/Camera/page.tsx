@@ -1,33 +1,47 @@
 import React, { useState, useEffect } from "react";
 
-const Camera = ({ camera }) => {
+interface CameraProps {
+  camera: string;
+}
+
+const Camera: React.FC<CameraProps> = ({ camera }) => {
   const [videoFrame, setVideoFrame] = useState("");
 
   useEffect(() => {
     if (camera) {
-      // Update the video frame periodically (simulate continuous video stream)
       const interval = setInterval(() => {
-        setVideoFrame("data:image/jpeg;base64," + camera);  // Set the base64 video frame
-      }, 100);  // Update every 100ms (adjust based on video frame rate)
-
-      // Cleanup the interval on component unmount
+        setVideoFrame("data:image/jpeg;base64," + camera);
+      }, 100);
       return () => clearInterval(interval);
     }
   }, [camera]);
 
   return (
-    <div className="relative w-full h-full bg-gray-200 rounded-lg overflow-hidden shadow-lg border border-gray-300">
-      {videoFrame ? (
-        <img
-          src={videoFrame}
-          alt="Live Camera Feed"
-          className="w-full h-full object-cover"  // Ensures the image covers the container without distortion
-        />
-      ) : (
-        <div className="text-center text-gray-500">No video feed available</div>
-      )}
+    <div className="flex justify-center items-center">
+      <div
+        className="w-64 h-64 rounded-full overflow-hidden border-4 border-white"
+        style={{
+          position: "relative", // Ensures the shadow is properly confined to the circle
+        }}
+      >
+        {videoFrame ? (
+          <img
+            src={videoFrame}
+            alt="Live Camera Feed"
+            className="w-full h-full object-cover"
+            style={{
+              borderRadius: "9999px", // Ensure inner image respects the round shape
+              boxShadow: "0 0 12px 4px rgba(49, 205, 240, 0.9)", // Glow effect applied only to the circular border
+            }}
+          />
+        ) : (
+          <div className="text-center text-gray-500 p-4">No video feed available</div>
+        )}
+      </div>
     </div>
   );
+  
 };
+
 
 export default Camera;
