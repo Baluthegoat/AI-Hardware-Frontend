@@ -18,7 +18,7 @@ const Temperature = () => {
         setTemperatureData({
           temperature: response.data.temperature, // access the temperature data
         });
-        setLastUpdated(new Date()); // Update the last updated timestamp
+        setLastUpdated(new Date()); 
       } catch (error) {
         console.error("Error fetching temperature data:", error);
         setError("Failed to fetch temperature data.");
