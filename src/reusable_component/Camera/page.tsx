@@ -19,7 +19,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
   return (
     <div className="flex justify-center items-center">
       <div
-        className="w-64 h-64 rounded-full overflow-hidden border-4 border-white"
+        className="w-65 h-65 rounded-full overflow-hidden border-4 border-white"
         style={{
           position: "relative", // Ensures the shadow is properly confined to the circle
         }}
