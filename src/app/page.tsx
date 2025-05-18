@@ -20,7 +20,7 @@ interface LiveMapBoxProps {
 
 const LiveMapBox = dynamic(() => import('../reusable_component/Map/page'), {
   ssr: false,
-  loading: () => <div className="text-white text-center p-4">Loading map...</div>
+  loading: () => <div className="text-black text-center p-4">Loading map...</div>
 });
 
 export default function Dashboard() {
@@ -77,7 +77,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-screen text-gray-800">
+      <div className="flex justify-center items-center h-screen text-black">
         Loading data...
       </div>
     );
@@ -85,18 +85,18 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen text-red-500">
+      <div className="flex justify-center items-center h-screen text-red-600">
         {error}
       </div>
     );
   }
 
   return (
-    <div className="bg-black min-h-screen flex flex-col relative overflow-hidden">
-      {/* Top Speedometer Section with Curved Border */}
-      <div className="w-full relative flex justify-center mb-5">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-4/5 h-20 bg-gray-900 border-b border-l border-r border-gray-700 rounded-b-full shadow-lg"></div>
-        <div className="relative z-10 pt-2.5">
+    <div className="bg-white min-h-screen flex flex-col relative overflow-hidden text-black">
+      {/* Top Speedometer Section (Smaller) */}
+      <div className="w-full relative flex justify-center mb-3">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[50%] h-14 bg-gray-200 border-b border-l border-r border-black rounded-b-full shadow-md"></div>
+        <div className="relative z-15 pt-1 text-bold">
           <Speedometer speed={data.speed} />
         </div>
       </div>
@@ -104,13 +104,13 @@ export default function Dashboard() {
       {/* Main Content Section */}
       <div className="flex flex-1 px-4 py-4 justify-between items-center">
         {/* Left Map Panel */}
-        <div className="w-1/4 h-64 mx-2">
-          <div className="bg-black rounded-lg border border-cyan-400 h-full overflow-hidden">
-            <div className="text-white text-xs p-2 border-b border-cyan-400 bg-gray-900 bg-opacity-70">
+        <div className="w-1/4 h-96 mx-2">
+          <div className="bg-white rounded-lg border border-gray-400 h-full overflow-hidden">
+            <div className="text-black text-xs p-2 border-b border-gray-400 bg-gray-100">
               <div>Remain: {data.distance.remain}</div>
               <div>{data.distance.nextTurn}</div>
             </div>
-            <div className="h-[83%] w-full">
+            <div className="h-full w-full">
               <LiveMapBox initialPosition={data.gps} />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function Dashboard() {
 
         {/* Center Camera Feed */}
         <div className="flex-1 flex justify-center items-center">
-          <div className="w-80 h-80 rounded-full border-4 border-cyan-400 overflow-hidden flex items-center justify-center">
+          <div className="w-100 h-120 rounded-full border-4 border-gray-400 overflow-hidden flex items-center justify-center">
             <Camera camera={data.camera} className="w-full h-full object-cover" />
           </div>
         </div>
@@ -126,21 +126,21 @@ export default function Dashboard() {
         {/* Right Side Panels */}
         <div className="w-1/4 mx-2 flex flex-col gap-4">
           {/* Battery Widget */}
-          <div className="bg-black rounded-lg border border-cyan-400 p-3">
+          <div className="bg-white rounded-lg border border-gray-400 p-3">
             <Battery battery={data.battery} />
           </div>
 
           {/* Temperature Widget */}
-          <div className="bg-black rounded-lg border border-cyan-400 p-3">
+          <div className="bg-white rounded-lg border border-gray-400 p-3">
             <Temperature location={data.gps.location} temperature={data.temperature} />
           </div>
         </div>
       </div>
 
       {/* Bottom Curved Border with Clock */}
-      <div className="w-full relative flex justify-center items-center mt-5 mb-2.5 h-20">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4/5 h-20 bg-gray-900 border-t border-l border-r border-gray-700 rounded-t-full shadow-lg"></div>
-        <div className="relative z-10 text-center text-white">
+      <div className="w-full relative flex justify-center items-center mt-5 mb-2.5 h-15">
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[50%] h-20 bg-gray-200 border-t border-l border-r border-black rounded-t-full shadow-lg"></div>
+        <div className="relative z-10 text-center text-black">
           <div className="text-sm font-semibold">Time</div>
           <div className="text-2xl font-bold">{time}</div>
         </div>
