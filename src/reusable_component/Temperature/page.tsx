@@ -70,29 +70,13 @@ const Temperature = () => {
           <Thermometer
             theme="light"
             value={temperatureData.temperature}
-            max="30" // Set according to your expected temperature range
-            steps="1"
+            max="40" // Set according to your expected temperature range
+            steps=""
             format="°C"
-            size="large"
-            height="200"
+            size="small"
+            height="75"
             thermometerColor={thermometerColor} // Apply dynamic color to the thermometer
           />
-
-          {/* Temperature Data Below Thermometer */}
-          <div className="mt-4 flex flex-col items-center">
-            <p className={`text-lg font-semibold ${textColor}`}>
-              {temperatureData.temperature}°C
-            </p>
-
-            {/* Temperature Range Label */}
-            <div className="mt-2 text-lg font-semibold" style={{ color: thermometerColor }}>
-              {temperatureData.temperature < 5
-                ? "Cold"
-                : temperatureData.temperature <= 15
-                ? "Normal"
-                : "Hot"}
-            </div>
-          </div>
         </div>
       </div>
     </div>

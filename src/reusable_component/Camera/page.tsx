@@ -11,7 +11,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
     if (camera) {
       const interval = setInterval(() => {
         setVideoFrame("data:image/jpeg;base64," + camera);
-      }, 100);
+      }, 1);
       return () => clearInterval(interval);
     }
   }, [camera]);
@@ -19,7 +19,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
   return (
     <div className="flex justify-center items-center">
       <div
-        className="w-65 h-65 rounded-full overflow-hidden border-4 border-white"
+        className="w-65 h-65 rounded-full overflow-hidden border-4"
         style={{
           position: "relative", // Ensures the shadow is properly confined to the circle
         }}
@@ -31,7 +31,7 @@ const Camera: React.FC<CameraProps> = ({ camera }) => {
             className="w-full h-full object-cover"
             style={{
               borderRadius: "9999px", // Ensure inner image respects the round shape
-              boxShadow: "0 0 12px 4px rgba(49, 205, 240, 0.9)", // Glow effect applied only to the circular border
+              // boxShadow: "0 0 12px 4px rgba(49, 205, 240, 0.9)", // Glow effect applied only to the circular border
             }}
           />
         ) : (

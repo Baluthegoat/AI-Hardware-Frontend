@@ -22,12 +22,9 @@ const Dashboard: React.FC = () => {
                 const response = await axios.get("http://localhost:3001/api/data");
 
                 const newData = {
-                    speed: response.data.speed || "Unknown",
-                    gps: response.data.gps || { latitude: 0, longitude: 0 },
-                    battery: response.data.battery || { percentage: 0, health: "Good" },
-                    temperature: response.data.temperature || "17°C",
-                    location: response.data.location || "Bronx, NY",
-                    camera: response.data.camera || "",
+                    speed: response.data.speed  { latitude: 0, longitude: 0 },
+                    battery: response.data.battery  "17°C",
+                    location: response.data.location  "",
                 };
 
                 setData(prev => {
@@ -97,8 +94,7 @@ const Dashboard: React.FC = () => {
                 <div className="bg-black rounded-full border-4 border-cyan-400 w-80 h-80 flex items-center justify-center overflow-hidden">
                     <Camera camera={data.camera} />
                 </div>
-
-                {/* Right Battery + Weather */}
+{/* Right Battery + Weather */}
                 <div className="flex flex-col gap-4 w-1/4">
                     {/* Battery Card */}
                     <div className="bg-gray-900 rounded-lg p-4 text-white border border-cyan-400">
@@ -123,7 +119,7 @@ const Dashboard: React.FC = () => {
                             <span className="text-2xl font-bold mr-2">
                                 {data.temperature}
                             </span>
-                            <span className="text-yellow-300">🌤️</span>
+                            <span className="text-yellow-300">🌤</span>
                         </div>
                         <div className="text-sm text-gray-400">
                             Outdoor Temperature
@@ -132,12 +128,15 @@ const Dashboard: React.FC = () => {
                 </div>
             </div>
 
-            {/* Bottom: Clock */}
-            <div className="mt-4 text-sm text-gray-400">
-                Current Time: {time}
-            </div>
+    {/* Bottom: Clock Box */}
+<div className="mt-4 w-full max-w-4xl flex justify-center">
+    <div className="bg-gray-900 rounded-lg p-2 w-full flex flex-col items-center border border-white text-white">
+        <div className="text-base font-semibold mb-1">Time</div>
+        <div className="text-xl font-bold">{time}</div>
+    </div>
+</div>
         </div>
     );
-};
+}   
 
 export default Dashboard;

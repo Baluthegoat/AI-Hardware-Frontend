@@ -42,21 +42,7 @@ const Speedometer = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-<div
-  style={{
-    width: "24rem",
-    borderLeft: "2px solid white", // Left border
-    borderRight: "2px solid white", // Right border
-    borderBottom: "2px solid white", // Bottom border
-    boxShadow: `
-      0 4px 12px rgba(49, 205, 240, 0.9),   /* Bottom glow */
-      -4px 0 12px rgba(49, 205, 240, 0.9),  /* Left glow */
-      4px 0 12px rgba(49, 205, 240, 0.9)    /* Right glow */
-      /* No top glow - top glow removed */
-    `,
-  }}
-  className="bg-gray-900 rounded-lg p-4 text-white"
->
+<div>
   <div className="flex items-center justify-center space-x-2">
     <h2 className="text-gray-400 uppercase tracking-wider text-sm">SPEED</h2>
     <div className="text-5xl font-bold text-blue-400">{speedData.speed}</div>
