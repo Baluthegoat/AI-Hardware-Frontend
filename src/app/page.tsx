@@ -95,8 +95,8 @@ export default function Dashboard() {
     <div className="bg-white min-h-screen flex flex-col relative overflow-hidden text-black">
       {/* Top Speedometer Section (Smaller) */}
       <div className="w-full relative flex justify-center mb-3">
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[50%] h-14 bg-gray-200 border-b border-l border-r border-black rounded-b-full shadow-md"></div>
-        <div className="relative z-15 pt-1 text-bold">
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-[50%] h-14 bg-black border-2 border-blue-400 rounded-b-full shadow-md"></div>
+        <div className="relative z-15 pt-1 text-extrabold text-white">
           <Speedometer speed={data.speed} />
         </div>
       </div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
       <div className="flex flex-1 px-4 py-4 justify-between items-center">
         {/* Left Map Panel */}
         <div className="w-1/4 h-96 mx-2">
-          <div className="bg-white rounded-lg border border-gray-400 h-full overflow-hidden">
+          <div className="bg-white rounded-lg border-2 border-blue-400 h-full overflow-hidden">
             <div className="text-black text-xs p-2 border-b border-gray-400 bg-gray-100">
               <div>Remain: {data.distance.remain}</div>
               <div>{data.distance.nextTurn}</div>
@@ -118,20 +118,20 @@ export default function Dashboard() {
 
         {/* Center Camera Feed */}
         <div className="flex-1 flex justify-center items-center">
-          <div className="w-100 h-120 rounded-full border-4 border-gray-400 overflow-hidden flex items-center justify-center">
-            <Camera camera={data.camera} className="w-full h-full object-cover" />
+          <div className="w-100 h-120 rounded-full border-2 border-blue-400 overflow-hidden flex items-center justify-center">
+            <Camera camera={data.camera} className="w-full h-full object-cover mt-8" />
           </div>
         </div>
 
         {/* Right Side Panels */}
         <div className="w-1/4 mx-2 flex flex-col gap-4">
           {/* Battery Widget */}
-          <div className="bg-white rounded-lg border border-gray-400 p-3">
+          <div className="bg-white rounded-lg border-2 border-blue-400 p-3">
             <Battery battery={data.battery} />
           </div>
 
           {/* Temperature Widget */}
-          <div className="bg-white rounded-lg border border-gray-400 p-3">
+          <div className="bg-white rounded-lg border-2 border-blue-400 p-3">
             <Temperature location={data.gps.location} temperature={data.temperature} />
           </div>
         </div>
@@ -139,10 +139,10 @@ export default function Dashboard() {
 
       {/* Bottom Curved Border with Clock */}
       <div className="w-full relative flex justify-center items-center mt-5 mb-2.5 h-15">
-        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[50%] h-20 bg-gray-200 border-t border-l border-r border-black rounded-t-full shadow-lg"></div>
+        <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[60%] h-16 bg-black border-2 border-2 border-r border-blue-400 rounded-t-full shadow-lg"></div>
         <div className="relative z-10 text-center text-black">
-          <div className="text-sm font-semibold">Time</div>
-          <div className="text-2xl font-bold">{time}</div>
+          <div className="text-sm font-semibold text-white">Time</div>
+          <div className="text-2xl font-bold text-white">{time}</div>
         </div>
       </div>
     </div>

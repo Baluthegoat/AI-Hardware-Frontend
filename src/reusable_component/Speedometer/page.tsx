@@ -34,11 +34,11 @@ const Speedometer = () => {
   return (
     <div>
       <div className="flex items-center justify-center space-x-4">
-        <h2 className="text-gray-400 tracking-wider text-xl mt-2">SPEED</h2>
+        <h2 className="text-white tracking-wider text-xl mt-2">SPEED</h2>
         <div className="text-8xl font-extrabold text-blue-400 leading-none">
           {speedData.speed}
         </div>
-        <span className="text-gray-400 text-2xl mt-2">MPH</span>
+        <span className="text-white text-2xl mt-2">MPH</span>
       </div>
     </div>
   );
